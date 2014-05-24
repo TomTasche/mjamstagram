@@ -67,7 +67,7 @@ function toggleCommentPost(id, expanded) {
   }
 }
 </script>
-<title>Photofeed</title>
+<title>mjamstagram</title>
 <link rel="stylesheet" type="text/css" href="photofeed.css" />
 </head>
 
@@ -76,7 +76,8 @@ function toggleCommentPost(id, expanded) {
 
     <div class="header group">
       <h1>
-        <img src="img/photofeed.png" alt="Photofeed" />
+        <!--<img src="img/photofeed.png" alt="Photofeed" />-->
+	mjamstagram!
       </h1>
       <div class="glow"></div>
     </div>

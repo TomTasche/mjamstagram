@@ -1,0 +1,15 @@
+war/WEB-INF/classes/
+war/WEB-INF/lib/
+
+*.class
+
+# Package Files #
+*.war
+*.ear
+
+.settings/
+/bin
+
+# Intellij
+/.idea
+*.iml
