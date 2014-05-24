@@ -58,7 +58,6 @@ h1 {
 }
 
 #upload .account #account-name {
-  float: right;
   margin: 10px 0 0 0;
   width: 200px;
 }
@@ -215,7 +214,6 @@ textarea {
 }
 
 .feed .post .owner .desc {
-  float: right;
   text-shadow: 0 -1px 0 #fff;
   width: 500px;
 }
@@ -240,7 +238,6 @@ textarea {
 
 .feed .post .usr {
   border-bottom: 1px dotted #e9e9e9;
-  float: right;
   padding: 0 0 18px 0;
   width: 525px;
 }
