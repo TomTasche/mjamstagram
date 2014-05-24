@@ -85,12 +85,6 @@ function toggleCommentPost(id, expanded) {
     <div id="upload-wrap">
       <div id="upload">
         <div class="account group">
-          <div id="account-thumb">
-            <img
-              src="<%= ServletUtils.getUserIconImageUrl(currentUser.getUserId()) %>"
-              alt="Unknown User Icon" />
-          </div>
-          <!-- /#account-thumb -->
           <div id="account-name">
             <h2><%= ServletUtils.getProtectedUserNickname(currentUser.getNickname()) %></h2>
             <p><%= currentUser.getEmail() %>
@@ -150,8 +144,6 @@ function toggleCommentPost(id, expanded) {
             alt="Photo Image" />
         </div>
         <div class="owner group">
-          <img src="<%= ServletUtils.getUserIconImageUrl(photo.getOwnerId()) %>"
-            alt="" />
           <div class="desc">
             <h3><%= ServletUtils.getProtectedUserNickname(photo.getOwnerNickname()) %></h3>
             <p><c:out value="<%= photo.getTitle() %>" escapeXml="true"/>
@@ -169,9 +161,6 @@ function toggleCommentPost(id, expanded) {
     %>
       <div class="post group">
         <div class="usr">
-          <img
-            src="<%= ServletUtils.getUserIconImageUrl(comment.getCommentOwnerId()) %>"
-            alt="" />
           <div class="comment">
             <h3><%= ServletUtils.getProtectedUserNickname(comment.getCommentOwnerName()) %></h3>
             <p><c:out value="<%= comment.getContent() %>" escapeXml="true"/>
@@ -189,9 +178,6 @@ function toggleCommentPost(id, expanded) {
     %>
       <div class="post group">
         <div class="usr last">
-          <img
-            src="<%= ServletUtils.getUserIconImageUrl(currentUser.getUserId()) %>"
-            alt="" />
           <div class="comment">
             <h3><%= ServletUtils.getProtectedUserNickname(currentUser.getNickname()) %></h3>
             <form action="<%= configManager.getCommentPostUrl() %>"
