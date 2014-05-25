@@ -90,6 +90,10 @@ public class AppContext {
   public DemoUser getCurrentUser() {
     DemoUserManager demoUserManager = entityManagerFactory.getDemoUserManager();
     User user = UserServiceFactory.getUserService().getCurrentUser();
+    if (user == null) {
+    	return null;
+    }
+    
     DemoUser demoUser = demoUserManager.getUser(user.getUserId());
     if (demoUser == null) {
       demoUser = demoUserManager.newUser(user.getUserId());

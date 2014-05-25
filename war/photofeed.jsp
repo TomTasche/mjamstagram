@@ -67,7 +67,7 @@ function toggleCommentPost(id, expanded) {
   }
 }
 </script>
-<title>mjamstagram</title>
+<title>mjamstagram!</title>
 <link rel="stylesheet" type="text/css" href="photofeed.css" />
 </head>
 
@@ -82,35 +82,60 @@ function toggleCommentPost(id, expanded) {
       <div class="glow"></div>
     </div>
 
-    <div id="upload-wrap">
-      <div id="upload">
-        <div class="account group">
-          <div id="account-name">
-            <h2><%= ServletUtils.getProtectedUserNickname(currentUser.getNickname()) %></h2>
-            <p><%= currentUser.getEmail() %>
-              | <a
-                href=<%= userService.createLogoutURL(configManager.getMainPageUrl())%>>Sign
-                out</a>
-            </p>
-          </div>
-          <!-- /#account-name -->
-        </div>
-        <!-- /.account -->
-        <a id="btn-choose-image" class="active btn" onclick="togglePhotoPost(true)">Choose an image</a>
-        <div id="upload-form" style="display:none">
-          <form action="<%= serviceManager.getUploadUrl() %>" method="post"
-            enctype="multipart/form-data">
-            <input id="input-file" class="inactive file btn" type="file" name="photo"
-              onchange="onFileSelected()">
-            <textarea name="title" placeholder="Write a description"></textarea>
-            <input id="btn-post" class="active btn" type="submit" value="Post">
-            <a class="cancel" onclick="togglePhotoPost(false)">Cancel</a>
-          </form>
-        </div>
-      </div>
-      <!-- /#upload -->
-    </div>
-    <!-- /#upload-wrap -->
+    <%
+    if (currentUser != null) {
+    	%>
+	    <div id="upload-wrap">
+	      <div id="upload">
+	        <div class="account group">
+	          <div id="account-name">
+	            <h2><%= ServletUtils.getProtectedUserNickname(currentUser.getNickname()) %></h2>
+	            <p>You are ready to upload photos of your food!
+	              | <a
+	                href=<%= userService.createLogoutURL(configManager.getMainPageUrl())%>>Sign
+	                out</a>
+	            </p>
+	          </div>
+	          <!-- /#account-name -->
+	        </div>
+	        <!-- /.account -->
+	        <a id="btn-choose-image" class="active btn" onclick="togglePhotoPost(true)">Choose a photo</a>
+	        <div id="upload-form" style="display:none">
+	          <form action="<%= serviceManager.getUploadUrl() %>" method="post"
+	            enctype="multipart/form-data">
+	            <input id="input-file" class="inactive file btn" type="file" name="photo"
+	              onchange="onFileSelected()">
+	            <textarea name="title" placeholder="Write a description"></textarea>
+	            <input id="btn-post" class="active btn" type="submit" value="Post">
+	            <a class="cancel" onclick="togglePhotoPost(false)">Cancel</a>
+	          </form>
+	        </div>
+	      </div>
+	      <!-- /#upload -->
+	    </div>
+	    <!-- /#upload-wrap -->
+	    <%
+    } else {
+    	%>
+    	<div id="upload-wrap">
+	      <div id="upload">
+	        <div class="account group">
+	          <div id="account-name">
+	            <h2>anonymous user</h2>
+	            <p>In order to upload a photo of your food, please sign in below:
+	            </p>
+	          </div>
+	          <!-- /#account-name -->
+	        </div>
+	        <!-- /.account -->
+	        <a id="btn-choose-image" class="active btn" href=<%= userService.createLoginURL(configManager.getMainPageUrl())%>>Sign In!</a>
+	      </div>
+	      <!-- /#upload -->
+	    </div>
+	    <!-- /#upload-wrap -->
+    	<%
+    }
+    %>
 
     <!-- KK -->
     <%
@@ -178,7 +203,6 @@ function toggleCommentPost(id, expanded) {
       <div class="post group">
         <div class="usr last">
           <div class="comment">
-            <h3><%= ServletUtils.getProtectedUserNickname(currentUser.getNickname()) %></h3>
             <form action="<%= configManager.getCommentPostUrl() %>"
               method="post">
               <input type="hidden" name="user" value="<%= photo.getOwnerId()%>" />
