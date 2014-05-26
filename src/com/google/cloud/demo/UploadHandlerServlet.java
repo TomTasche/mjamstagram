@@ -50,7 +50,9 @@ public class UploadHandlerServlet extends HttpServlet {
     if (keys != null && keys.size() > 0) {
       PhotoManager photoManager = appContext.getPhotoManager();
       Photo photo = photoManager.newPhoto(user.getUserId());
-      String title = req.getParameter("title");
+      // TODO:
+      String url = req.getParameter("url");
+      String food = req.getParameter("food");
       if (title != null) {
         photo.setTitle(title);
       }

@@ -19,7 +19,7 @@ import com.google.appengine.api.blobstore.BlobKey;
  * The photo entity interface.
  *
  */
-public interface Photo extends DemoEntity {
+public interface Restaurant extends DemoEntity {
   Long getId();
 
   BlobKey getBlobKey();
@@ -30,13 +30,13 @@ public interface Photo extends DemoEntity {
 
   void setShared(boolean shared);
 
-  String getRestaurant();
+  String getName();
 
-  void setRestaurant(Restaurant restaurant);
+  void setName(String name);
   
-  String getFood();
+  String getUrl();
 
-  void setFood(String food);
+  void setUrl(String url);
 
   String getOwnerNickname();
 

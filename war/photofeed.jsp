@@ -105,7 +105,9 @@ function toggleCommentPost(id, expanded) {
 	            enctype="multipart/form-data">
 	            <input id="input-file" class="inactive file btn" type="file" name="photo"
 	              onchange="onFileSelected()">
-	            <textarea name="title" placeholder="Write a description"></textarea>
+	            <input type="text" name="url" placeholder="link to the restaurant where you ordered"></input>
+	            <input type="text" name="food" placeholder="What food is shown on the photo you want to upload?"></input>
+	            <br />
 	            <input id="btn-post" class="active btn" type="submit" value="Post">
 	            <a class="cancel" onclick="togglePhotoPost(false)">Cancel</a>
 	          </form>
