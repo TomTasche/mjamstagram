@@ -20,6 +20,7 @@ import com.google.cloud.demo.model.DemoEntityManagerFactory;
 import com.google.cloud.demo.model.DemoUser;
 import com.google.cloud.demo.model.DemoUserManager;
 import com.google.cloud.demo.model.PhotoManager;
+import com.google.cloud.demo.model.RestaurantManager;
 
 import java.util.logging.Logger;
 
@@ -73,6 +74,10 @@ public class AppContext {
 
   public PhotoManager getPhotoManager() {
     return entityManagerFactory.getPhotoManager();
+  }
+  
+  public RestaurantManager getRestaurantManager() {
+    return entityManagerFactory.getRestaurantManager();
   }
 
   public CommentManager getCommentManager() {

@@ -54,7 +54,7 @@
               <%
                   }
               %>
-              <%=photo.getTitle()%>
+              <%=photo.getFood()%>
             </a></td>
           </tr>
           <%
@@ -78,7 +78,7 @@
             <td class="menu-item"><a
               href="<%=serviceManager.getMenuLinkUrl(targetPageUrl, photo)%>"> <img
                 src="<%=serviceManager.getThumbnailUrl(photo.getBlobKey())%>"
-                width=32 height=32><%= photo.getTitle() %></a></td>
+                width=32 height=32><%= photo.getFood() %></a></td>
           </tr>
           <%
               }
@@ -116,10 +116,10 @@
                           <td>
                             <%
                               if (currentUserId.equals(selectedPhoto.getOwnerId())) {
-                                out.println("<input type=\"text\" name=\"title\" value=\"" +
-                                    selectedPhoto.getTitle() + "\"/>");
+                                out.println("<input type=\"text\" name=\"food\" value=\"" +
+                                    selectedPhoto.getFood() + "\"/>");
                               } else {
-                                out.println(selectedPhoto.getTitle());
+                                out.println(selectedPhoto.getFood());
                               }
                             %>
                           </td>
@@ -225,7 +225,7 @@
               </tr>
               <tr>
                 <td>Title:</td>
-                <td><input type="text" name="title" /></td>
+                <td><input type="text" name="food" /></td>
               </tr>
               <tr>
                 <td>&nbsp;</td>

@@ -21,98 +21,108 @@ import com.google.cloud.demo.model.Photo;
 
 /**
  * Photo entity for NoSQL.
- *
+ * 
  */
 public class PhotoNoSql extends DemoEntityNoSql implements Photo {
-  static final String FIELD_NAME_OWNER_ID = "ownerId";
-  static final String FIELD_NAME_OWNER_NICKNAME = "owner";
-  static final String FIELD_NAME_TITLE = "title";
-  static final String FIELD_NAME_SHARED = "shared";
-  static final String FIELD_NAME_BLOB_KEY = "blobKey";
-  static final String FIELD_NAME_UPLOAD_TIME = "uploadTime";
-  static final String FIELD_NAME_ACTIVE = "active";
+	static final String FIELD_NAME_OWNER_ID = "ownerId";
+	static final String FIELD_NAME_OWNER_NICKNAME = "owner";
+	static final String FIELD_NAME_FOOD = "food";
+	static final String FIELD_NAME_SHARED = "shared";
+	static final String FIELD_NAME_BLOB_KEY = "blobKey";
+	static final String FIELD_NAME_UPLOAD_TIME = "uploadTime";
+	static final String FIELD_NAME_ACTIVE = "active";
+	static final String FIELD_NAME_RESTAURANT_ID = "restaurantId";
 
+	public PhotoNoSql(Entity entity) {
+		super(entity);
+	}
 
-  public PhotoNoSql(Entity entity) {
-    super(entity);
-  }
+	public PhotoNoSql(Key parentKey, String kind) {
+		super(parentKey, kind);
+		setActive(true);
+		entity.setProperty(FIELD_NAME_OWNER_ID, parentKey.getName());
+	}
 
-  public PhotoNoSql(Key parentKey, String kind) {
-    super(parentKey, kind);
-    setActive(true);
-    entity.setProperty(FIELD_NAME_OWNER_ID, parentKey.getName());
-  }
+	@Override
+	public BlobKey getBlobKey() {
+		return (BlobKey) entity.getProperty(FIELD_NAME_BLOB_KEY);
+	}
 
-  @Override
-  public BlobKey getBlobKey() {
-    return (BlobKey) entity.getProperty(FIELD_NAME_BLOB_KEY);
-  }
+	@Override
+	public void setBlobKey(BlobKey blobKey) {
+		entity.setProperty(FIELD_NAME_BLOB_KEY, blobKey);
+	}
 
-  @Override
-  public void setBlobKey(BlobKey blobKey) {
-    entity.setProperty(FIELD_NAME_BLOB_KEY, blobKey);
-  }
+	@Override
+	public boolean isShared() {
+		Boolean shared = (Boolean) entity.getProperty(FIELD_NAME_SHARED);
+		return shared != null && shared;
+	}
 
-  @Override
-  public boolean isShared() {
-    Boolean shared = (Boolean) entity.getProperty(FIELD_NAME_SHARED);
-    return shared != null && shared;
-  }
+	@Override
+	public void setShared(boolean shared) {
+		entity.setProperty(FIELD_NAME_SHARED, shared);
+	}
 
-  @Override
-  public void setShared(boolean shared) {
-    entity.setProperty(FIELD_NAME_SHARED, shared);
-  }
+	@Override
+	public String getFood() {
+		return (String) entity.getProperty(FIELD_NAME_FOOD);
+	}
 
-  @Override
-  public String getTitle() {
-    return (String) entity.getProperty(FIELD_NAME_TITLE);
-  }
+	@Override
+	public void setFood(String food) {
+		entity.setProperty(FIELD_NAME_FOOD, food);
+	}
 
-  @Override
-  public void setTitle(String title) {
-    entity.setProperty(FIELD_NAME_TITLE, title);
-  }
+	@Override
+	public String getOwnerNickname() {
+		return (String) entity.getProperty(FIELD_NAME_OWNER_NICKNAME);
+	}
 
-  @Override
-  public String getOwnerNickname() {
-    return (String) entity.getProperty(FIELD_NAME_OWNER_NICKNAME);
-  }
+	@Override
+	public void setOwnerNickname(String nickename) {
+		entity.setProperty(FIELD_NAME_OWNER_NICKNAME, nickename);
+	}
 
-  @Override
-  public void setOwnerNickname(String nickename) {
-    entity.setProperty(FIELD_NAME_OWNER_NICKNAME, nickename);
-  }
+	@Override
+	public String getOwnerId() {
+		return (String) entity.getProperty(FIELD_NAME_OWNER_ID);
+	}
 
-  @Override
-  public String getOwnerId() {
-    return (String) entity.getProperty(FIELD_NAME_OWNER_ID);
-  }
+	@Override
+	public long getUploadTime() {
+		return (Long) entity.getProperty(FIELD_NAME_UPLOAD_TIME);
+	}
 
-  @Override
-  public long getUploadTime() {
-    return (Long) entity.getProperty(FIELD_NAME_UPLOAD_TIME);
-  }
+	@Override
+	public void setUploadTime(long uploadTime) {
+		entity.setProperty(FIELD_NAME_UPLOAD_TIME, uploadTime);
+	}
 
-  @Override
-  public void setUploadTime(long uploadTime) {
-    entity.setProperty(FIELD_NAME_UPLOAD_TIME, uploadTime);
-  }
+	@Override
+	public Long getId() {
+		return entity.getKey().getId();
+	}
 
-  @Override
-  public Long getId() {
-    return entity.getKey().getId();
-  }
+	@Override
+	public boolean isActive() {
+		Boolean active = (Boolean) entity.getProperty(FIELD_NAME_ACTIVE);
+		// By default, if not set false, a photo is active.
+		return active != null && active;
+	}
 
-  @Override
-  public boolean isActive() {
-    Boolean active = (Boolean) entity.getProperty(FIELD_NAME_ACTIVE);
-    // By default, if not set false, a photo is active.
-    return active != null && active;
-  }
+	@Override
+	public void setActive(boolean active) {
+		entity.setProperty(FIELD_NAME_ACTIVE, active);
+	}
 
-  @Override
-  public void setActive(boolean active) {
-    entity.setProperty(FIELD_NAME_ACTIVE, active);
-  }
+	@Override
+	public long getRestaurantId() {
+		return (Long) entity.getProperty(FIELD_NAME_RESTAURANT_ID);
+	}
+
+	@Override
+	public void setRestaurantId(long restaurantId) {
+		entity.setProperty(FIELD_NAME_RESTAURANT_ID, restaurantId);
+	}
 }

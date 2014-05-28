@@ -34,6 +34,8 @@ public interface DemoEntityManagerFactory {
    * @return the photo manager object.
    */
   PhotoManager getPhotoManager();
+  
+  RestaurantManager getRestaurantManager();
 
   /**
    * Gets the comment manager.

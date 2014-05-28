@@ -13,42 +13,18 @@
  */
 package com.google.cloud.demo.model;
 
-import com.google.appengine.api.blobstore.BlobKey;
-
 /**
- * The photo entity interface.
+ * The comment entity interface.
  *
  */
-public interface Photo extends DemoEntity {
+public interface Restaurant extends DemoEntity {
   Long getId();
 
-  BlobKey getBlobKey();
+  String getName();
 
-  void setBlobKey(BlobKey blobKey);
+  void setName(String name);
 
-  boolean isShared();
+  String getUrl();
 
-  void setShared(boolean shared);
-
-  long getRestaurantId();
-
-  void setRestaurantId(long restaurantId);
-  
-  String getFood();
-
-  void setFood(String food);
-
-  String getOwnerNickname();
-
-  void setOwnerNickname(String nickname);
-
-  String getOwnerId();
-
-  long getUploadTime();
-
-  void setUploadTime(long uploadTime);
-
-  boolean isActive();
-
-  void setActive(boolean active);
+  void setUrl(String url);
 }

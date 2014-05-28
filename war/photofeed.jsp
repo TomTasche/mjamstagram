@@ -173,7 +173,7 @@ function toggleCommentPost(id, expanded) {
         <div class="owner group">
           <div class="desc">
             <h3><%= ServletUtils.getProtectedUserNickname(photo.getOwnerNickname()) %></h3>
-            <p><c:out value="<%= photo.getTitle() %>" escapeXml="true"/>
+            <p><c:out value="<%= photo.getFood() %>" escapeXml="true"/>
             <p>
             <p class="timestamp"><%= ServletUtils.formatTimestamp(photo.getUploadTime()) %></p>
           </div>

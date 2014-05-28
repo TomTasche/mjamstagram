@@ -29,7 +29,7 @@ import javax.servlet.http.HttpServletResponse;
 public class PhotoEditServlet extends HttpServlet {
   private static final String REQUEST_PARAM_NAME_DELETE = "delete";
   private static final String REQUEST_PARAM_NAME_SAVE = "save";
-  private static final String REQUEST_PARAM_NAME_TITLE = "title";
+  private static final String REQUEST_PARAM_NAME_FOOD = "food";
   private static final long serialVersionUID = 1L;
 
   @Override
@@ -46,9 +46,9 @@ public class PhotoEditServlet extends HttpServlet {
       Photo photo = photoManager.getPhoto(user, photoId);
       if (photo != null) {
         if (save != null) {
-          String title = req.getParameter(REQUEST_PARAM_NAME_TITLE);
+          String food = req.getParameter(REQUEST_PARAM_NAME_FOOD);
           String isPrivate = req.getParameter(ServletUtils.REQUEST_PARAM_NAME_PRIVATE);
-          photo.setTitle(title);
+          photo.setFood(food);
           photo.setShared(isPrivate == null);
           photoManager.upsertEntity(photo);
         } else if (delete != null) {

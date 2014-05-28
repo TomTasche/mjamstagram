@@ -29,14 +29,14 @@
         value="com.google.cloud.demo.model.sql.DemoEntityManagerSqlFactory"/>
      -->
      <property name="entityManagerFactory"
-        value="com.google.cloud.demo.model.sql.DemoEntityManagerSqlFactory"/>
+        value="com.google.cloud.demo.model.nosql.DemoEntityManagerNoSqlFactory"/>
 
      <!-- The Cloud SQL connection URL -->
      <property name="cloudSQLConnectionUrl"
-       value="jdbc:google:rdbms://mjamstagram:photofeed/demo"/>
+       value=""/>
 
      <!-- The Cloud Storage bucket name -->
-     <property name="cloudStorageBucketName" value="mjamstagram-photofeed"/>
+     <property name="cloudStorageBucketName" value=""/>
   </system-properties>
 
   <!-- HTTP Sessions are disabled by default. To enable HTTP sessions specify: <sessions-enabled>true</sessions-enabled>

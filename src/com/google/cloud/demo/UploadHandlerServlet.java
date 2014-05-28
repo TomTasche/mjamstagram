@@ -19,6 +19,8 @@ import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
 import com.google.cloud.demo.model.DemoUser;
 import com.google.cloud.demo.model.Photo;
 import com.google.cloud.demo.model.PhotoManager;
+import com.google.cloud.demo.model.Restaurant;
+import com.google.cloud.demo.model.RestaurantManager;
 
 import java.io.IOException;
 import java.util.List;
@@ -39,7 +41,7 @@ public class UploadHandlerServlet extends HttpServlet {
     AppContext appContext = AppContext.getAppContext();
     DemoUser user = appContext.getCurrentUser();
     if (user == null) {
-      res.sendError(401, "You have to login to upload image.");
+      res.sendError(HttpServletResponse.SC_UNAUTHORIZED, "You have to login to upload image.");
       return;
     }
     BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
@@ -50,12 +52,23 @@ public class UploadHandlerServlet extends HttpServlet {
     if (keys != null && keys.size() > 0) {
       PhotoManager photoManager = appContext.getPhotoManager();
       Photo photo = photoManager.newPhoto(user.getUserId());
-      // TODO:
       String url = req.getParameter("url");
       String food = req.getParameter("food");
-      if (title != null) {
-        photo.setTitle(title);
+      if (url == null || url.isEmpty() || food == null || food.isEmpty()) {
+        res.sendError(HttpServletResponse.SC_BAD_REQUEST);
       }
+      
+      RestaurantManager restaurantManager = appContext.getRestaurantManager();
+      Restaurant restaurant = restaurantManager.getRestaurant(url);
+      if (restaurant == null) {
+    	  restaurant = restaurantManager.newRestaurant(url);
+    	  restaurant.setUrl(url);
+    	  
+    	  restaurant = restaurantManager.upsertEntity(restaurant);
+      }
+      
+      photo.setFood(food);
+      photo.setRestaurantId(restaurant.getId());
 
       String isPrivate = req.getParameter(ServletUtils.REQUEST_PARAM_NAME_PRIVATE);
       photo.setShared(isPrivate == null);
@@ -71,11 +84,12 @@ public class UploadHandlerServlet extends HttpServlet {
       id = photo.getId().toString();
       succeeded = true;
     }
+    
     if (succeeded) {
       res.sendRedirect(appContext.getPhotoServiceManager().getRedirectUrl(
           req.getParameter(ServletUtils.REQUEST_PARAM_NAME_TARGET_URL), user.getUserId(), id));
     } else {
-      res.sendError(400, "Request cannot be handled.");
+      res.sendError(HttpServletResponse.SC_BAD_REQUEST, "Request cannot be handled.");
     }
   }
 }
