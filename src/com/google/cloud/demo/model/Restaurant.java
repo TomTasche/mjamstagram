@@ -15,16 +15,16 @@ package com.google.cloud.demo.model;
 
 /**
  * The comment entity interface.
- *
+ * 
  */
 public interface Restaurant extends DemoEntity {
-  Long getId();
+	Long getId();
 
-  String getName();
+	String getName();
 
-  void setName(String name);
+	void setName(String name);
 
-  String getUrl();
+	String getUrl();
 
-  void setUrl(String url);
+	void setUrl(String url);
 }

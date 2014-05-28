@@ -16,7 +16,7 @@ package com.google.cloud.demo.model;
 
 /**
  * Base interface for all entity classes.
- *
+ * 
  */
 public interface DemoEntity {
 

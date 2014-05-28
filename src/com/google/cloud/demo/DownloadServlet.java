@@ -26,23 +26,26 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * Photo download servlet.
- *
+ * 
  */
 public class DownloadServlet extends HttpServlet {
-  private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-  @Override
-  public void doGet(HttpServletRequest req, HttpServletResponse res) throws IOException {
-    String user = req.getParameter("user");
-    String id = req.getParameter("id");
-    Long photoId = ServletUtils.validatePhotoId(id);
-    if (photoId != null && user != null) {
-      Photo photo = AppContext.getAppContext().getPhotoManager().getPhoto(user, photoId);
-      BlobKey blobKey = photo.getBlobKey();
-      BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
-      blobstoreService.serve(blobKey, res);
-    } else {
-      res.sendError(400, "One or more parameters are not set");
-    }
-  }
+	@Override
+	public void doGet(HttpServletRequest req, HttpServletResponse res)
+			throws IOException {
+		String user = req.getParameter("user");
+		String id = req.getParameter("id");
+		Long photoId = ServletUtils.validatePhotoId(id);
+		if (photoId != null && user != null) {
+			Photo photo = AppContext.getAppContext().getPhotoManager()
+					.getPhoto(user, photoId);
+			BlobKey blobKey = photo.getBlobKey();
+			BlobstoreService blobstoreService = BlobstoreServiceFactory
+					.getBlobstoreService();
+			blobstoreService.serve(blobKey, res);
+		} else {
+			res.sendError(400, "One or more parameters are not set");
+		}
+	}
 }

@@ -20,12 +20,13 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * Clean up deleted photos.
- *
+ * 
  */
 public class CleanupCronServlet extends HttpServlet {
-  @Override
-  protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
-    PhotoServiceManager manager = AppContext.getAppContext().getPhotoServiceManager();
-    manager.cleanDeatctivedPhotos();
-  }
+	@Override
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
+		PhotoServiceManager manager = AppContext.getAppContext()
+				.getPhotoServiceManager();
+		manager.cleanDeatctivedPhotos();
+	}
 }

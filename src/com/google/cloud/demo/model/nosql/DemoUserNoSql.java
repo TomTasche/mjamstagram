@@ -18,42 +18,42 @@ import com.google.cloud.demo.model.DemoUser;
 
 /**
  * User entity class for NoSQL.
- *
+ * 
  */
-public class DemoUserNoSql extends DemoEntityNoSql  implements DemoUser {
-  private static final String FIELD_NAME_NICKNAME = "nickname";
-  private static final String FIELD_NAME_EMAIL = "email";
+public class DemoUserNoSql extends DemoEntityNoSql implements DemoUser {
+	private static final String FIELD_NAME_NICKNAME = "nickname";
+	private static final String FIELD_NAME_EMAIL = "email";
 
-  public DemoUserNoSql(Entity entity) {
-    super(entity);
-  }
+	public DemoUserNoSql(Entity entity) {
+		super(entity);
+	}
 
-  public DemoUserNoSql(String kind, String userId) {
-    super(kind, userId);
-  }
+	public DemoUserNoSql(String kind, String userId) {
+		super(kind, userId);
+	}
 
-  @Override
-  public String getUserId() {
-    return entity.getKey().getName();
-  }
+	@Override
+	public String getUserId() {
+		return entity.getKey().getName();
+	}
 
-  @Override
-  public String getEmail() {
-    return (String) entity.getProperty(FIELD_NAME_EMAIL);
-  }
+	@Override
+	public String getEmail() {
+		return (String) entity.getProperty(FIELD_NAME_EMAIL);
+	}
 
-  @Override
-  public void setEmail(String email) {
-    entity.setProperty(FIELD_NAME_EMAIL, email);
-  }
+	@Override
+	public void setEmail(String email) {
+		entity.setProperty(FIELD_NAME_EMAIL, email);
+	}
 
-  @Override
-  public String getNickname() {
-    return (String) entity.getProperty(FIELD_NAME_NICKNAME);
-  }
+	@Override
+	public String getNickname() {
+		return (String) entity.getProperty(FIELD_NAME_NICKNAME);
+	}
 
-  @Override
-  public void setNickname(String nickname) {
-    entity.setProperty(FIELD_NAME_NICKNAME, nickname);
-  }
+	@Override
+	public void setNickname(String nickname) {
+		entity.setProperty(FIELD_NAME_NICKNAME, nickname);
+	}
 }

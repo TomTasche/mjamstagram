@@ -20,86 +20,83 @@ import javax.servlet.http.HttpServlet;
 
 /**
  * A utility class.
- *
+ * 
  */
 public final class ServletUtils extends HttpServlet {
-  public static final String REQUEST_PARAM_NAME_PHOTO_OWNER_ID = "user";
-  public static final String REQUEST_PARAM_NAME_PHOTO_ID = "id";
-  public static final String REQUEST_PARAM_NAME_PRIVATE = "private";
-  public static final String REQUEST_PARAM_NAME_COMMENT = "comment";
-  public static final String REQUEST_PARAM_NAME_TARGET_URL = "targetUrl";
-  // The error code.
-  public static final String REQUEST_PARAM_NAME_CODE = "code";
-  public static final String[] USER_ICONS = new String[] {
-    "img/users/ba.png",
-    "img/users/dp.png",
-    "img/users/ej.png",
-    "img/users/jm.png",
-    "img/users/kk.png",
-    "img/users/mg.png",
-    "img/users/xm.png",
-  };
+	public static final String REQUEST_PARAM_NAME_PHOTO_OWNER_ID = "user";
+	public static final String REQUEST_PARAM_NAME_PHOTO_ID = "id";
+	public static final String REQUEST_PARAM_NAME_PRIVATE = "private";
+	public static final String REQUEST_PARAM_NAME_COMMENT = "comment";
+	public static final String REQUEST_PARAM_NAME_TARGET_URL = "targetUrl";
+	// The error code.
+	public static final String REQUEST_PARAM_NAME_CODE = "code";
+	public static final String[] USER_ICONS = new String[] {
+			"img/users/ba.png", "img/users/dp.png", "img/users/ej.png",
+			"img/users/jm.png", "img/users/kk.png", "img/users/mg.png",
+			"img/users/xm.png", };
 
-  private static final String DATE_FORMAT_STRING = "K:mma MMM d, yyyy z";
+	private static final String DATE_FORMAT_STRING = "K:mma MMM d, yyyy z";
 
-  private ServletUtils() {}
+	private ServletUtils() {
+	}
 
-  /**
-   * Creates a new {@code SimpleDateFormat}. Since the class is not
-   * thread-safe, we wrap it with a method to create a new one on every
-   * call.
-   *
-   * @return a {@code SimpleDateFormat} object.
-   */
-  private static SimpleDateFormat getDateFormat() {
-    return new SimpleDateFormat(DATE_FORMAT_STRING);
-  }
+	/**
+	 * Creates a new {@code SimpleDateFormat}. Since the class is not
+	 * thread-safe, we wrap it with a method to create a new one on every call.
+	 * 
+	 * @return a {@code SimpleDateFormat} object.
+	 */
+	private static SimpleDateFormat getDateFormat() {
+		return new SimpleDateFormat(DATE_FORMAT_STRING);
+	}
 
-  public static String formatTimestamp(long timestamp) {
-    return getDateFormat().format(new Date(timestamp));
-  }
+	public static String formatTimestamp(long timestamp) {
+		return getDateFormat().format(new Date(timestamp));
+	}
 
-  /**
-   * Convert and validate the string id is a valid photo id.
-   *
-   * @param id the string id.
-   * @return the photo id as long integer; or null if string id is invalid.
-   */
-  public static Long validatePhotoId(String id) {
-    try {
-      if (id != null) {
-        return Long.parseLong(id);
-      }
-    } catch (NumberFormatException e) {
-      // NOP.
-    }
-    return null;
-  }
+	/**
+	 * Convert and validate the string id is a valid photo id.
+	 * 
+	 * @param id
+	 *            the string id.
+	 * @return the photo id as long integer; or null if string id is invalid.
+	 */
+	public static Long validatePhotoId(String id) {
+		try {
+			if (id != null) {
+				return Long.parseLong(id);
+			}
+		} catch (NumberFormatException e) {
+			// NOP.
+		}
+		return null;
+	}
 
-  /**
-   * Gets the user icon image url.
-   *
-   * @param userId the user id string.
-   * @return the url string.
-   */
-  public static String getUserIconImageUrl(String userId) {
-    if (userId != null) {
-      int hash = userId.hashCode();
-      if (hash < 0) {
-        hash = -hash;
-      }
-      return USER_ICONS[hash % USER_ICONS.length];
-    }
-    return "";
-  }
+	/**
+	 * Gets the user icon image url.
+	 * 
+	 * @param userId
+	 *            the user id string.
+	 * @return the url string.
+	 */
+	public static String getUserIconImageUrl(String userId) {
+		if (userId != null) {
+			int hash = userId.hashCode();
+			if (hash < 0) {
+				hash = -hash;
+			}
+			return USER_ICONS[hash % USER_ICONS.length];
+		}
+		return "";
+	}
 
-  public static String getProtectedUserNickname(String nickname) {
-    if (nickname != null) {
-      int index = nickname.indexOf("@");
-      if (index > 0) {
-        nickname = nickname.substring(0, index);
-      }
-    }
-    return nickname;
-  }
+	public static String getProtectedUserNickname(String nickname) {
+		if (nickname != null) {
+			int index = nickname.indexOf("@");
+			if (index > 0) {
+				nickname = nickname.substring(0, index);
+			}
+		}
+		return nickname;
+	}
 }

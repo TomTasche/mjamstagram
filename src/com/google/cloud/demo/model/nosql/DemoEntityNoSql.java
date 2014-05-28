@@ -19,24 +19,24 @@ import com.google.appengine.api.datastore.Key;
 
 /**
  * Base entity class for NoSQL.
- *
+ * 
  */
 public abstract class DemoEntityNoSql {
-  protected final Entity entity;
+	protected final Entity entity;
 
-  protected DemoEntityNoSql(Entity entity) {
-    this.entity = entity;
-  }
+	protected DemoEntityNoSql(Entity entity) {
+		this.entity = entity;
+	}
 
-  protected DemoEntityNoSql(Key parentKey, String kind) {
-    this.entity = new Entity(kind, parentKey);
-  }
+	protected DemoEntityNoSql(Key parentKey, String kind) {
+		this.entity = new Entity(kind, parentKey);
+	}
 
-  protected DemoEntityNoSql(String kind, String keyName) {
-    this.entity = new Entity(kind, keyName);
-  }
+	protected DemoEntityNoSql(String kind, String keyName) {
+		this.entity = new Entity(kind, keyName);
+	}
 
-  public Entity getEntity() {
-    return entity;
-  }
+	public Entity getEntity() {
+		return entity;
+	}
 }

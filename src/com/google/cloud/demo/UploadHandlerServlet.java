@@ -30,66 +30,75 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
 /**
  * Servlet to handle photo upload to Google Cloud Storage.
- *
+ * 
  */
 public class UploadHandlerServlet extends HttpServlet {
-  @Override
-  public void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException {
-    AppContext appContext = AppContext.getAppContext();
-    DemoUser user = appContext.getCurrentUser();
-    if (user == null) {
-      res.sendError(HttpServletResponse.SC_UNAUTHORIZED, "You have to login to upload image.");
-      return;
-    }
-    BlobstoreService blobstoreService = BlobstoreServiceFactory.getBlobstoreService();
-    Map<String, List<BlobKey>> blobs = blobstoreService.getUploads(req);
-    List<BlobKey> keys = blobs.get("photo");
-    String id = null;
-    boolean succeeded = false;
-    if (keys != null && keys.size() > 0) {
-      PhotoManager photoManager = appContext.getPhotoManager();
-      Photo photo = photoManager.newPhoto(user.getUserId());
-      String url = req.getParameter("url");
-      String food = req.getParameter("food");
-      if (url == null || url.isEmpty() || food == null || food.isEmpty()) {
-        res.sendError(HttpServletResponse.SC_BAD_REQUEST);
-      }
-      
-      RestaurantManager restaurantManager = appContext.getRestaurantManager();
-      Restaurant restaurant = restaurantManager.getRestaurant(url);
-      if (restaurant == null) {
-    	  restaurant = restaurantManager.newRestaurant(url);
-    	  restaurant.setUrl(url);
-    	  
-    	  restaurant = restaurantManager.upsertEntity(restaurant);
-      }
-      
-      photo.setFood(food);
-      photo.setRestaurantId(restaurant.getId());
+	@Override
+	public void doPost(HttpServletRequest req, HttpServletResponse res)
+			throws IOException {
+		AppContext appContext = AppContext.getAppContext();
+		DemoUser user = appContext.getCurrentUser();
+		if (user == null) {
+			res.sendError(HttpServletResponse.SC_UNAUTHORIZED,
+					"You have to login to upload image.");
+			return;
+		}
+		BlobstoreService blobstoreService = BlobstoreServiceFactory
+				.getBlobstoreService();
+		Map<String, List<BlobKey>> blobs = blobstoreService.getUploads(req);
+		List<BlobKey> keys = blobs.get("photo");
+		String id = null;
+		boolean succeeded = false;
+		if (keys != null && keys.size() > 0) {
+			PhotoManager photoManager = appContext.getPhotoManager();
+			Photo photo = photoManager.newPhoto(user.getUserId());
+			String url = req.getParameter("url");
+			String food = req.getParameter("food");
+			if (url == null || url.isEmpty() || food == null || food.isEmpty()) {
+				res.sendError(HttpServletResponse.SC_BAD_REQUEST);
+			}
 
-      String isPrivate = req.getParameter(ServletUtils.REQUEST_PARAM_NAME_PRIVATE);
-      photo.setShared(isPrivate == null);
+			RestaurantManager restaurantManager = appContext
+					.getRestaurantManager();
+			Restaurant restaurant = restaurantManager.getRestaurant(url);
+			if (restaurant == null) {
+				restaurant = restaurantManager.newRestaurant(url);
+				restaurant.setUrl(url);
 
-      photo.setOwnerNickname(ServletUtils.getProtectedUserNickname(user.getNickname()));
+				restaurant = restaurantManager.upsertEntity(restaurant);
+			}
 
-      BlobKey blobKey = keys.get(0);
-      photo.setBlobKey(blobKey);
+			photo.setFood(food);
+			photo.setRestaurantId(restaurant.getId());
 
-      photo.setUploadTime(System.currentTimeMillis());
+			String isPrivate = req
+					.getParameter(ServletUtils.REQUEST_PARAM_NAME_PRIVATE);
+			photo.setShared(isPrivate == null);
 
-      photo = photoManager.upsertEntity(photo);
-      id = photo.getId().toString();
-      succeeded = true;
-    }
-    
-    if (succeeded) {
-      res.sendRedirect(appContext.getPhotoServiceManager().getRedirectUrl(
-          req.getParameter(ServletUtils.REQUEST_PARAM_NAME_TARGET_URL), user.getUserId(), id));
-    } else {
-      res.sendError(HttpServletResponse.SC_BAD_REQUEST, "Request cannot be handled.");
-    }
-  }
+			photo.setOwnerNickname(ServletUtils.getProtectedUserNickname(user
+					.getNickname()));
+
+			BlobKey blobKey = keys.get(0);
+			photo.setBlobKey(blobKey);
+
+			photo.setUploadTime(System.currentTimeMillis());
+
+			photo = photoManager.upsertEntity(photo);
+			id = photo.getId().toString();
+			succeeded = true;
+		}
+
+		if (succeeded) {
+			res.sendRedirect(appContext
+					.getPhotoServiceManager()
+					.getRedirectUrl(
+							req.getParameter(ServletUtils.REQUEST_PARAM_NAME_TARGET_URL),
+							user.getUserId(), id));
+		} else {
+			res.sendError(HttpServletResponse.SC_BAD_REQUEST,
+					"Request cannot be handled.");
+		}
+	}
 }

@@ -15,30 +15,30 @@ package com.google.cloud.demo.model;
 
 /**
  * The comment entity interface.
- *
+ * 
  */
 public interface Comment extends DemoEntity {
-  Long getId();
+	Long getId();
 
-  String getContent();
+	String getContent();
 
-  void setContent(String content);
+	void setContent(String content);
 
-  long getTimestamp();
+	long getTimestamp();
 
-  void setTimestamp(long timestamp);
+	void setTimestamp(long timestamp);
 
-  long getPhotoId();
+	long getPhotoId();
 
-  void setPhotoId(long photoId);
+	void setPhotoId(long photoId);
 
-  String getPhotoOwnerId();
+	String getPhotoOwnerId();
 
-  void setPhotoOwnerId(String owner);
+	void setPhotoOwnerId(String owner);
 
-  String getCommentOwnerName();
+	String getCommentOwnerName();
 
-  void setCommentOwnerName(String owner);
+	void setCommentOwnerName(String owner);
 
-  String getCommentOwnerId();
+	String getCommentOwnerId();
 }

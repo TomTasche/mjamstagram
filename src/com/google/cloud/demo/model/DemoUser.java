@@ -15,16 +15,16 @@ package com.google.cloud.demo.model;
 
 /**
  * User entity interface.
- *
+ * 
  */
 public interface DemoUser extends DemoEntity {
-  String getUserId();
+	String getUserId();
 
-  String getEmail();
+	String getEmail();
 
-  void setEmail(String email);
+	void setEmail(String email);
 
-  String getNickname();
+	String getNickname();
 
-  void setNickname(String nickname);
+	void setNickname(String nickname);
 }

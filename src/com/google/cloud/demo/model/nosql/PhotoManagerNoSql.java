@@ -36,120 +36,126 @@ import java.util.logging.Logger;
 
 /**
  * The photo entity manager class for NoSQL.
- *
+ * 
  */
-public class PhotoManagerNoSql extends DemoEntityManagerNoSql<Photo> implements PhotoManager {
-  private static final Logger logger = Logger.getLogger(PhotoManagerNoSql.class.getCanonicalName());
-  private DemoUserManagerNoSql userManager;
+public class PhotoManagerNoSql extends DemoEntityManagerNoSql<Photo> implements
+		PhotoManager {
+	private static final Logger logger = Logger
+			.getLogger(PhotoManagerNoSql.class.getCanonicalName());
+	private DemoUserManagerNoSql userManager;
 
-  public PhotoManagerNoSql(DemoUserManagerNoSql userManager) {
-    super(Photo.class);
-    this.userManager = userManager;
-  }
+	public PhotoManagerNoSql(DemoUserManagerNoSql userManager) {
+		super(Photo.class);
+		this.userManager = userManager;
+	}
 
-  @Override
-  public Photo getPhoto(String userId, long id) {
-    Key key = createPhotoKey(userId, id);
-    return getEntity(key);
-  }
+	@Override
+	public Photo getPhoto(String userId, long id) {
+		Key key = createPhotoKey(userId, id);
+		return getEntity(key);
+	}
 
-  public Key createPhotoKey(String userId, Long id) {
-    Utils.assertTrue(id != null, "id cannot be null");
-    if (userId != null) {
-      Key parentKey = userManager.createDemoUserKey(userId);
-      return KeyFactory.createKey(parentKey, getKind(), id);
-    } else {
-      return KeyFactory.createKey(getKind(), id);
-    }
-  }
+	public Key createPhotoKey(String userId, Long id) {
+		Utils.assertTrue(id != null, "id cannot be null");
+		if (userId != null) {
+			Key parentKey = userManager.createDemoUserKey(userId);
+			return KeyFactory.createKey(parentKey, getKind(), id);
+		} else {
+			return KeyFactory.createKey(getKind(), id);
+		}
+	}
 
-  @Override
-  public Iterable<Photo> getActivePhotos() {
-    Query query = new Query(getKind());
-    Query.Filter filter = new Query.FilterPredicate(PhotoNoSql.FIELD_NAME_ACTIVE,
-        FilterOperator.EQUAL, true);
-    query.addSort(PhotoNoSql.FIELD_NAME_UPLOAD_TIME, SortDirection.DESCENDING);
-    query.setFilter(filter);
-    FetchOptions options = FetchOptions.Builder.withDefaults();
-    return queryEntities(query, options);
-  }
+	@Override
+	public Iterable<Photo> getActivePhotos() {
+		Query query = new Query(getKind());
+		Query.Filter filter = new Query.FilterPredicate(
+				PhotoNoSql.FIELD_NAME_ACTIVE, FilterOperator.EQUAL, true);
+		query.addSort(PhotoNoSql.FIELD_NAME_UPLOAD_TIME,
+				SortDirection.DESCENDING);
+		query.setFilter(filter);
+		FetchOptions options = FetchOptions.Builder.withDefaults();
+		return queryEntities(query, options);
+	}
 
-  @Override
-  public Iterable<Photo> getOwnedPhotos(String userId) {
-    Query query = new Query(getKind());
-    query.setAncestor(userManager.createDemoUserKey(userId));
-    Query.Filter filter = new Query.FilterPredicate(PhotoNoSql.FIELD_NAME_ACTIVE,
-        FilterOperator.EQUAL, true);
-    query.setFilter(filter);
-    FetchOptions options = FetchOptions.Builder.withDefaults();
-    return queryEntities(query, options);
-  }
+	@Override
+	public Iterable<Photo> getOwnedPhotos(String userId) {
+		Query query = new Query(getKind());
+		query.setAncestor(userManager.createDemoUserKey(userId));
+		Query.Filter filter = new Query.FilterPredicate(
+				PhotoNoSql.FIELD_NAME_ACTIVE, FilterOperator.EQUAL, true);
+		query.setFilter(filter);
+		FetchOptions options = FetchOptions.Builder.withDefaults();
+		return queryEntities(query, options);
+	}
 
-  @Override
-  public Iterable<Photo> getSharedPhotos(String userId) {
-    Query query = new Query(getKind());
-    Query.Filter ownerFilter =
-        new Query.FilterPredicate(PhotoNoSql.FIELD_NAME_OWNER_ID, FilterOperator.NOT_EQUAL, userId);
-    List<Query.Filter> filterList =
-        Arrays.asList(ownerFilter,
-            new Query.FilterPredicate(PhotoNoSql.FIELD_NAME_SHARED, FilterOperator.EQUAL, true),
-            new Query.FilterPredicate(PhotoNoSql.FIELD_NAME_ACTIVE, FilterOperator.EQUAL, true)
-            );
-    Filter filter = new Query.CompositeFilter(CompositeFilterOperator.AND, filterList);
-    query.setFilter(filter);
-    FetchOptions options = FetchOptions.Builder.withDefaults();
-    return queryEntities(query, options);
-  }
+	@Override
+	public Iterable<Photo> getSharedPhotos(String userId) {
+		Query query = new Query(getKind());
+		Query.Filter ownerFilter = new Query.FilterPredicate(
+				PhotoNoSql.FIELD_NAME_OWNER_ID, FilterOperator.NOT_EQUAL,
+				userId);
+		List<Query.Filter> filterList = Arrays.asList(ownerFilter,
+				new Query.FilterPredicate(PhotoNoSql.FIELD_NAME_SHARED,
+						FilterOperator.EQUAL, true), new Query.FilterPredicate(
+						PhotoNoSql.FIELD_NAME_ACTIVE, FilterOperator.EQUAL,
+						true));
+		Filter filter = new Query.CompositeFilter(CompositeFilterOperator.AND,
+				filterList);
+		query.setFilter(filter);
+		FetchOptions options = FetchOptions.Builder.withDefaults();
+		return queryEntities(query, options);
+	}
 
-  @Override
-  public Iterable<Photo> getDeactivedPhotos() {
-    Query query = new Query(getKind());
-    Query.Filter filter = new Query.FilterPredicate(PhotoNoSql.FIELD_NAME_ACTIVE,
-        FilterOperator.EQUAL, false);
-    query.setFilter(filter);
-    FetchOptions options = FetchOptions.Builder.withDefaults();
-    return queryEntities(query, options);
-  }
+	@Override
+	public Iterable<Photo> getDeactivedPhotos() {
+		Query query = new Query(getKind());
+		Query.Filter filter = new Query.FilterPredicate(
+				PhotoNoSql.FIELD_NAME_ACTIVE, FilterOperator.EQUAL, false);
+		query.setFilter(filter);
+		FetchOptions options = FetchOptions.Builder.withDefaults();
+		return queryEntities(query, options);
+	}
 
-  @Override
-  public PhotoNoSql fromParentKey(Key parentKey) {
-    return new PhotoNoSql(parentKey, getKind());
-  }
+	@Override
+	public PhotoNoSql fromParentKey(Key parentKey) {
+		return new PhotoNoSql(parentKey, getKind());
+	}
 
-  @Override
-  public PhotoNoSql newPhoto(String userId) {
-    return new PhotoNoSql(userManager.createDemoUserKey(userId), getKind());
-  }
+	@Override
+	public PhotoNoSql newPhoto(String userId) {
+		return new PhotoNoSql(userManager.createDemoUserKey(userId), getKind());
+	}
 
-  @Override
-  protected PhotoNoSql fromEntity(Entity entity) {
-    return new PhotoNoSql(entity);
-  }
+	@Override
+	protected PhotoNoSql fromEntity(Entity entity) {
+		return new PhotoNoSql(entity);
+	}
 
-  @Override
-  public Photo deactivePhoto(String userId, long id) {
-    Utils.assertTrue(userId != null, "user id cannot be null");
-    DatastoreService ds = getDatastoreService();
-    Transaction txn = ds.beginTransaction();
-    try {
-      Entity entity = getDatastoreEntity(ds, createPhotoKey(userId, id));
-      if (entity != null) {
-        PhotoNoSql photo = new PhotoNoSql(entity);
-        if (photo.isActive()) {
-          photo.setActive(false);
-          ds.put(entity);
-        }
-        txn.commit();
+	@Override
+	public Photo deactivePhoto(String userId, long id) {
+		Utils.assertTrue(userId != null, "user id cannot be null");
+		DatastoreService ds = getDatastoreService();
+		Transaction txn = ds.beginTransaction();
+		try {
+			Entity entity = getDatastoreEntity(ds, createPhotoKey(userId, id));
+			if (entity != null) {
+				PhotoNoSql photo = new PhotoNoSql(entity);
+				if (photo.isActive()) {
+					photo.setActive(false);
+					ds.put(entity);
+				}
+				txn.commit();
 
-        return photo;
-      }
-    } catch (Exception e) {
-      logger.severe("Failed to delete entity from datastore:" + e.getMessage());
-    } finally {
-      if (txn.isActive()) {
-        txn.rollback();
-      }
-    }
-    return null;
-  }
+				return photo;
+			}
+		} catch (Exception e) {
+			logger.severe("Failed to delete entity from datastore:"
+					+ e.getMessage());
+		} finally {
+			if (txn.isActive()) {
+				txn.rollback();
+			}
+		}
+		return null;
+	}
 }

@@ -18,36 +18,37 @@ import com.google.cloud.demo.ConfigManager;
 
 /**
  * The entity manager factory interface.
- *
+ * 
  */
 public interface DemoEntityManagerFactory {
-  /**
-   * Initiates the factory object.
-   *
-   * @param configManager the configuration manager.
-   */
-  void init(ConfigManager configManager);
+	/**
+	 * Initiates the factory object.
+	 * 
+	 * @param configManager
+	 *            the configuration manager.
+	 */
+	void init(ConfigManager configManager);
 
-  /**
-   * Gets the photo manager.
-   *
-   * @return the photo manager object.
-   */
-  PhotoManager getPhotoManager();
-  
-  RestaurantManager getRestaurantManager();
+	/**
+	 * Gets the photo manager.
+	 * 
+	 * @return the photo manager object.
+	 */
+	PhotoManager getPhotoManager();
 
-  /**
-   * Gets the comment manager.
-   *
-   * @return the comment manager object.
-   */
-  CommentManager getCommentManager();
+	RestaurantManager getRestaurantManager();
 
-  /**
-   * Gets the demo user manager.
-   *
-   * @return the demo user manager object.
-   */
-  DemoUserManager getDemoUserManager();
+	/**
+	 * Gets the comment manager.
+	 * 
+	 * @return the comment manager object.
+	 */
+	CommentManager getCommentManager();
+
+	/**
+	 * Gets the demo user manager.
+	 * 
+	 * @return the demo user manager object.
+	 */
+	DemoUserManager getDemoUserManager();
 }

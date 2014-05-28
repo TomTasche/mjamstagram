@@ -17,38 +17,38 @@ import com.google.appengine.api.blobstore.BlobKey;
 
 /**
  * The photo entity interface.
- *
+ * 
  */
 public interface Photo extends DemoEntity {
-  Long getId();
+	Long getId();
 
-  BlobKey getBlobKey();
+	BlobKey getBlobKey();
 
-  void setBlobKey(BlobKey blobKey);
+	void setBlobKey(BlobKey blobKey);
 
-  boolean isShared();
+	boolean isShared();
 
-  void setShared(boolean shared);
+	void setShared(boolean shared);
 
-  long getRestaurantId();
+	long getRestaurantId();
 
-  void setRestaurantId(long restaurantId);
-  
-  String getFood();
+	void setRestaurantId(long restaurantId);
 
-  void setFood(String food);
+	String getFood();
 
-  String getOwnerNickname();
+	void setFood(String food);
 
-  void setOwnerNickname(String nickname);
+	String getOwnerNickname();
 
-  String getOwnerId();
+	void setOwnerNickname(String nickname);
 
-  long getUploadTime();
+	String getOwnerId();
 
-  void setUploadTime(long uploadTime);
+	long getUploadTime();
 
-  boolean isActive();
+	void setUploadTime(long uploadTime);
 
-  void setActive(boolean active);
+	boolean isActive();
+
+	void setActive(boolean active);
 }

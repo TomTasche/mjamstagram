@@ -15,24 +15,24 @@ package com.google.cloud.demo.model;
 
 /**
  * Runtime exception thrown during datastore operations.
- *
+ * 
  */
 public class DemoModelException extends RuntimeException {
-  private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-  public DemoModelException() {
-    super();
-  }
+	public DemoModelException() {
+		super();
+	}
 
-  public DemoModelException(String message, Throwable cause) {
-    super(message, cause);
-  }
+	public DemoModelException(String message, Throwable cause) {
+		super(message, cause);
+	}
 
-  public DemoModelException(String message) {
-    super(message);
-  }
+	public DemoModelException(String message) {
+		super(message);
+	}
 
-  public DemoModelException(Throwable cause) {
-    super(cause);
-  }
+	public DemoModelException(Throwable cause) {
+		super(cause);
+	}
 }

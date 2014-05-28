@@ -15,23 +15,25 @@ package com.google.cloud.demo.model;
 
 /**
  * User manager interface.
- *
+ * 
  */
 public interface DemoUserManager extends DemoEntityManager<DemoUser> {
-  /**
-   * Gets the user entity based on user id.
-   *
-   * @param userId the user id.
-   *
-   * @return the user entity; return null if user is not found.
-   */
-  DemoUser getUser(String userId);
+	/**
+	 * Gets the user entity based on user id.
+	 * 
+	 * @param userId
+	 *            the user id.
+	 * 
+	 * @return the user entity; return null if user is not found.
+	 */
+	DemoUser getUser(String userId);
 
-  /**
-   * Creates a new user object. The object is not serialized to datastore yet.
-   *
-   * @param userId the user id.
-   * @return the user object.
-   */
-  DemoUser newUser(String userId);
+	/**
+	 * Creates a new user object. The object is not serialized to datastore yet.
+	 * 
+	 * @param userId
+	 *            the user id.
+	 * @return the user object.
+	 */
+	DemoUser newUser(String userId);
 }

@@ -33,65 +33,72 @@ import javax.annotation.Nullable;
 
 /**
  * Entity manager class to support comment datastore operations.
- *
+ * 
  */
 public class CommentManagerNoSql extends DemoEntityManagerNoSql<Comment>
-    implements CommentManager {
-  private final DemoUserManagerNoSql userManager;
+		implements CommentManager {
+	private final DemoUserManagerNoSql userManager;
 
-  public CommentManagerNoSql(DemoUserManagerNoSql userManager) {
-    super(Comment.class);
-    this.userManager = userManager;
-  }
+	public CommentManagerNoSql(DemoUserManagerNoSql userManager) {
+		super(Comment.class);
+		this.userManager = userManager;
+	}
 
-  @Override
-  public Comment getComment(String userId, Long id) {
-    return getEntity(createCommentKey(userId, id));
-  }
+	@Override
+	public Comment getComment(String userId, Long id) {
+		return getEntity(createCommentKey(userId, id));
+	}
 
-  @Override
-  public Iterable<Comment> getComments(Photo photo) {
-    Query query = new Query(getKind());
-    Query.Filter photoIdFilter =
-        new Query.FilterPredicate(CommentNoSql.FIELD_NAME_PHOTO_ID,
-            FilterOperator.EQUAL, photo.getId());
-    List<Filter> filters = Arrays.asList(photoIdFilter, new Query.FilterPredicate(
-        CommentNoSql.FIELD_NAME_PHOTO_OWNER_ID, FilterOperator.EQUAL, photo.getOwnerId()));
-    Filter filter = new Query.CompositeFilter(CompositeFilterOperator.AND, filters);
-    query.setFilter(filter);
-    query.addSort(CommentNoSql.FIELD_NAME_TIMESTAMP, SortDirection.DESCENDING);
-    FetchOptions options = FetchOptions.Builder.withDefaults();
-    return queryEntities(query, options);
-  }
+	@Override
+	public Iterable<Comment> getComments(Photo photo) {
+		Query query = new Query(getKind());
+		Query.Filter photoIdFilter = new Query.FilterPredicate(
+				CommentNoSql.FIELD_NAME_PHOTO_ID, FilterOperator.EQUAL,
+				photo.getId());
+		List<Filter> filters = Arrays.asList(photoIdFilter,
+				new Query.FilterPredicate(
+						CommentNoSql.FIELD_NAME_PHOTO_OWNER_ID,
+						FilterOperator.EQUAL, photo.getOwnerId()));
+		Filter filter = new Query.CompositeFilter(CompositeFilterOperator.AND,
+				filters);
+		query.setFilter(filter);
+		query.addSort(CommentNoSql.FIELD_NAME_TIMESTAMP,
+				SortDirection.DESCENDING);
+		FetchOptions options = FetchOptions.Builder.withDefaults();
+		return queryEntities(query, options);
+	}
 
-  /**
-   * Creates a comment entity key.
-   *
-   * @param userId the user id. If null, no parent key is set.
-   * @param id the comment id.
-   * @return a datastore key object.
-   */
-  public Key createCommentKey(@Nullable String userId, long id) {
-    if (userId != null) {
-      Key parentKey = userManager.createDemoUserKey(userId);
-      return KeyFactory.createKey(parentKey, getKind(), id);
-    } else {
-      return KeyFactory.createKey(getKind(), id);
-    }
-  }
+	/**
+	 * Creates a comment entity key.
+	 * 
+	 * @param userId
+	 *            the user id. If null, no parent key is set.
+	 * @param id
+	 *            the comment id.
+	 * @return a datastore key object.
+	 */
+	public Key createCommentKey(@Nullable String userId, long id) {
+		if (userId != null) {
+			Key parentKey = userManager.createDemoUserKey(userId);
+			return KeyFactory.createKey(parentKey, getKind(), id);
+		} else {
+			return KeyFactory.createKey(getKind(), id);
+		}
+	}
 
-  @Override
-  public CommentNoSql fromParentKey(Key parentKey) {
-    return new CommentNoSql(parentKey, getKind());
-  }
+	@Override
+	public CommentNoSql fromParentKey(Key parentKey) {
+		return new CommentNoSql(parentKey, getKind());
+	}
 
-  @Override
-  public CommentNoSql newComment(String userId) {
-    return new CommentNoSql(userManager.createDemoUserKey(userId), getKind());
-  }
+	@Override
+	public CommentNoSql newComment(String userId) {
+		return new CommentNoSql(userManager.createDemoUserKey(userId),
+				getKind());
+	}
 
-  @Override
-  protected CommentNoSql fromEntity(Entity entity) {
-    return new CommentNoSql(entity);
-  }
+	@Override
+	protected CommentNoSql fromEntity(Entity entity) {
+		return new CommentNoSql(entity);
+	}
 }

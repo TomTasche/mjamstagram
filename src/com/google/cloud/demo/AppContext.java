@@ -26,86 +26,93 @@ import java.util.logging.Logger;
 
 /**
  * A convenient singleton context object for the application.
- *
+ * 
  */
 public class AppContext {
-  private static final Logger logger = Logger.getLogger(AppContext.class.getCanonicalName());
+	private static final Logger logger = Logger.getLogger(AppContext.class
+			.getCanonicalName());
 
-  private static AppContext instance = new AppContext();
+	private static AppContext instance = new AppContext();
 
-  private ConfigManager configManager;
+	private ConfigManager configManager;
 
-  private PhotoServiceManager photoServiceManager;
+	private PhotoServiceManager photoServiceManager;
 
-  private DemoEntityManagerFactory entityManagerFactory;
+	private DemoEntityManagerFactory entityManagerFactory;
 
-  // Prevent the class being instantiated externally.
-  private AppContext() {
-    configManager = new ConfigManager();
+	// Prevent the class being instantiated externally.
+	private AppContext() {
+		configManager = new ConfigManager();
 
-    String clsName = configManager.getDemoEntityManagerFactory();
-    try {
-      Class<?> cls = Class.forName(clsName);
-      entityManagerFactory = (DemoEntityManagerFactory) cls.newInstance();
-      entityManagerFactory.init(configManager);
-    } catch (ClassNotFoundException e) {
-      logger.severe("cannot find demo entity manager factory class:" + e.getMessage());
-      throw new RuntimeException("cannot find demo entity manager factory class", e);
-    } catch (InstantiationException e) {
-      logger.severe("cannot create instance of entity manager factory");
-      throw new RuntimeException("cannot create instance of entity manager factory", e);
-    } catch (IllegalAccessException e) {
-      logger.severe("cannot create instance of entity manager factory");
-      throw new RuntimeException("cannot create instance of entity manager factory", e);
-    }
-    photoServiceManager = new PhotoServiceManager(configManager, getPhotoManager());
-  }
+		String clsName = configManager.getDemoEntityManagerFactory();
+		try {
+			Class<?> cls = Class.forName(clsName);
+			entityManagerFactory = (DemoEntityManagerFactory) cls.newInstance();
+			entityManagerFactory.init(configManager);
+		} catch (ClassNotFoundException e) {
+			logger.severe("cannot find demo entity manager factory class:"
+					+ e.getMessage());
+			throw new RuntimeException(
+					"cannot find demo entity manager factory class", e);
+		} catch (InstantiationException e) {
+			logger.severe("cannot create instance of entity manager factory");
+			throw new RuntimeException(
+					"cannot create instance of entity manager factory", e);
+		} catch (IllegalAccessException e) {
+			logger.severe("cannot create instance of entity manager factory");
+			throw new RuntimeException(
+					"cannot create instance of entity manager factory", e);
+		}
+		photoServiceManager = new PhotoServiceManager(configManager,
+				getPhotoManager());
+	}
 
-  public static AppContext getAppContext() {
-    return instance;
-  }
+	public static AppContext getAppContext() {
+		return instance;
+	}
 
-  /**
-   * @return the demoUserManager
-   */
-  public DemoUserManager getDemoUserManager() {
-    return entityManagerFactory.getDemoUserManager();
-  }
+	/**
+	 * @return the demoUserManager
+	 */
+	public DemoUserManager getDemoUserManager() {
+		return entityManagerFactory.getDemoUserManager();
+	}
 
-  public PhotoManager getPhotoManager() {
-    return entityManagerFactory.getPhotoManager();
-  }
-  
-  public RestaurantManager getRestaurantManager() {
-    return entityManagerFactory.getRestaurantManager();
-  }
+	public PhotoManager getPhotoManager() {
+		return entityManagerFactory.getPhotoManager();
+	}
 
-  public CommentManager getCommentManager() {
-    return entityManagerFactory.getCommentManager();
-  }
+	public RestaurantManager getRestaurantManager() {
+		return entityManagerFactory.getRestaurantManager();
+	}
 
-  public ConfigManager getConfigManager() {
-    return configManager;
-  }
+	public CommentManager getCommentManager() {
+		return entityManagerFactory.getCommentManager();
+	}
 
-  public PhotoServiceManager getPhotoServiceManager() {
-    return photoServiceManager;
-  }
+	public ConfigManager getConfigManager() {
+		return configManager;
+	}
 
-  public DemoUser getCurrentUser() {
-    DemoUserManager demoUserManager = entityManagerFactory.getDemoUserManager();
-    User user = UserServiceFactory.getUserService().getCurrentUser();
-    if (user == null) {
-    	return null;
-    }
-    
-    DemoUser demoUser = demoUserManager.getUser(user.getUserId());
-    if (demoUser == null) {
-      demoUser = demoUserManager.newUser(user.getUserId());
-      demoUser.setEmail(user.getEmail());
-      demoUser.setNickname(user.getNickname());
-      demoUserManager.upsertEntity(demoUser);
-    }
-    return demoUser;
-  }
+	public PhotoServiceManager getPhotoServiceManager() {
+		return photoServiceManager;
+	}
+
+	public DemoUser getCurrentUser() {
+		DemoUserManager demoUserManager = entityManagerFactory
+				.getDemoUserManager();
+		User user = UserServiceFactory.getUserService().getCurrentUser();
+		if (user == null) {
+			return null;
+		}
+
+		DemoUser demoUser = demoUserManager.getUser(user.getUserId());
+		if (demoUser == null) {
+			demoUser = demoUserManager.newUser(user.getUserId());
+			demoUser.setEmail(user.getEmail());
+			demoUser.setNickname(user.getNickname());
+			demoUserManager.upsertEntity(demoUser);
+		}
+		return demoUser;
+	}
 }

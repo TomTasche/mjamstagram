@@ -27,50 +27,59 @@ import javax.servlet.http.HttpServletResponse;
 
 /**
  * Servlet to handle comment post.
- *
+ * 
  */
 public class CommentPostServlet extends HttpServlet {
-  private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-  @Override
-  protected void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException {
-    AppContext appContext = AppContext.getAppContext();
-    DemoUser currentUser = appContext.getCurrentUser();
-    String id = req.getParameter(ServletUtils.REQUEST_PARAM_NAME_PHOTO_ID);
-    String user = req.getParameter(ServletUtils.REQUEST_PARAM_NAME_PHOTO_OWNER_ID);
-    String content = req.getParameter(ServletUtils.REQUEST_PARAM_NAME_COMMENT);
-    boolean succeeded = false;
-    Long photoId = ServletUtils.validatePhotoId(id);
-    StringBuilder builder = new StringBuilder();
-    if (photoId != null && currentUser != null && user != null && content != null) {
-      content = content.trim();
-      if (!content.isEmpty()) {
-        PhotoManager photoManager = appContext.getPhotoManager();
-        Photo photo = photoManager.getPhoto(user, photoId);
-        if (photo != null) {
-          CommentManager commentManager = appContext.getCommentManager();
-          Comment comment = commentManager.newComment(currentUser.getUserId());
-          comment.setPhotoId(photoId);
-          comment.setPhotoOwnerId(user);
-          comment.setTimestamp(System.currentTimeMillis());
-          comment.setContent(content);
-          comment.setCommentOwnerName(currentUser.getNickname());
-          commentManager.upsertEntity(comment);
-          succeeded = true;
-        } else {
-          builder.append("Request cannot be handled.");
-        }
-      } else {
-        builder.append("Comment could not be empty");
-      }
-    } else {
-      builder.append("Bad parameters");
-    }
-    if (succeeded) {
-      res.sendRedirect(appContext.getPhotoServiceManager().getRedirectUrl(
-          req.getParameter(ServletUtils.REQUEST_PARAM_NAME_TARGET_URL), user, id));
-    } else {
-      res.sendError(400, builder.toString());
-    }
-  }
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse res)
+			throws IOException {
+		AppContext appContext = AppContext.getAppContext();
+		DemoUser currentUser = appContext.getCurrentUser();
+		String id = req.getParameter(ServletUtils.REQUEST_PARAM_NAME_PHOTO_ID);
+		String user = req
+				.getParameter(ServletUtils.REQUEST_PARAM_NAME_PHOTO_OWNER_ID);
+		String content = req
+				.getParameter(ServletUtils.REQUEST_PARAM_NAME_COMMENT);
+		boolean succeeded = false;
+		Long photoId = ServletUtils.validatePhotoId(id);
+		StringBuilder builder = new StringBuilder();
+		if (photoId != null && currentUser != null && user != null
+				&& content != null) {
+			content = content.trim();
+			if (!content.isEmpty()) {
+				PhotoManager photoManager = appContext.getPhotoManager();
+				Photo photo = photoManager.getPhoto(user, photoId);
+				if (photo != null) {
+					CommentManager commentManager = appContext
+							.getCommentManager();
+					Comment comment = commentManager.newComment(currentUser
+							.getUserId());
+					comment.setPhotoId(photoId);
+					comment.setPhotoOwnerId(user);
+					comment.setTimestamp(System.currentTimeMillis());
+					comment.setContent(content);
+					comment.setCommentOwnerName(currentUser.getNickname());
+					commentManager.upsertEntity(comment);
+					succeeded = true;
+				} else {
+					builder.append("Request cannot be handled.");
+				}
+			} else {
+				builder.append("Comment could not be empty");
+			}
+		} else {
+			builder.append("Bad parameters");
+		}
+		if (succeeded) {
+			res.sendRedirect(appContext
+					.getPhotoServiceManager()
+					.getRedirectUrl(
+							req.getParameter(ServletUtils.REQUEST_PARAM_NAME_TARGET_URL),
+							user, id));
+		} else {
+			res.sendError(400, builder.toString());
+		}
+	}
 }

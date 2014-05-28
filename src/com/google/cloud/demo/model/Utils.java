@@ -15,27 +15,29 @@ package com.google.cloud.demo.model;
 
 /**
  * A utility class.
- *
+ * 
  */
 public final class Utils {
 
-  private Utils() {
+	private Utils() {
 
-  }
+	}
 
-  /**
-   * Helper method to assert the condition is satisfied.
-   *
-   * @param condition the condition to assert.
-   * @param msg the message if condition is not satisfied.
-   */
-  public static void assertTrue(boolean condition, String msg) {
-    if (!condition) {
-      if (msg != null) {
-        throw new DemoModelException(msg);
-      } else {
-        throw new DemoModelException();
-      }
-    }
-  }
+	/**
+	 * Helper method to assert the condition is satisfied.
+	 * 
+	 * @param condition
+	 *            the condition to assert.
+	 * @param msg
+	 *            the message if condition is not satisfied.
+	 */
+	public static void assertTrue(boolean condition, String msg) {
+		if (!condition) {
+			if (msg != null) {
+				throw new DemoModelException(msg);
+			} else {
+				throw new DemoModelException();
+			}
+		}
+	}
 }

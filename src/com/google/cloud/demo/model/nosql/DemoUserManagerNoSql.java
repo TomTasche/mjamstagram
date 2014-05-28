@@ -23,36 +23,37 @@ import com.google.cloud.demo.model.Utils;
 
 /**
  * User manager class for NoSQL.
- *
+ * 
  */
 public class DemoUserManagerNoSql extends DemoEntityManagerNoSql<DemoUser>
-    implements DemoUserManager {
-  public DemoUserManagerNoSql() {
-    super(DemoUser.class);
-  }
+		implements DemoUserManager {
+	public DemoUserManagerNoSql() {
+		super(DemoUser.class);
+	}
 
-  public Key createDemoUserKey(String userId) {
-    return KeyFactory.createKey(getKind(), userId);
-  }
+	public Key createDemoUserKey(String userId) {
+		return KeyFactory.createKey(getKind(), userId);
+	}
 
-  @Override
-  protected DemoUserNoSql fromParentKey(Key parentKey) {
-    throw new DemoModelException("Demo User is entity group root, so it cannot have parent key");
-  }
+	@Override
+	protected DemoUserNoSql fromParentKey(Key parentKey) {
+		throw new DemoModelException(
+				"Demo User is entity group root, so it cannot have parent key");
+	}
 
-  @Override
-  protected DemoUserNoSql fromEntity(Entity entity) {
-    return new DemoUserNoSql(entity);
-  }
+	@Override
+	protected DemoUserNoSql fromEntity(Entity entity) {
+		return new DemoUserNoSql(entity);
+	}
 
-  @Override
-  public DemoUser getUser(String userId) {
-    Utils.assertTrue(userId != null, "userId is null!");
-    return getEntity(createDemoUserKey(userId));
-  }
+	@Override
+	public DemoUser getUser(String userId) {
+		Utils.assertTrue(userId != null, "userId is null!");
+		return getEntity(createDemoUserKey(userId));
+	}
 
-  @Override
-  public DemoUser newUser(String userId) {
-    return new DemoUserNoSql(getKind(), userId);
-  }
+	@Override
+	public DemoUser newUser(String userId) {
+		return new DemoUserNoSql(getKind(), userId);
+	}
 }

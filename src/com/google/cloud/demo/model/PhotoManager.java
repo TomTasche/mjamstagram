@@ -15,65 +15,70 @@ package com.google.cloud.demo.model;
 
 /**
  * The photo entity manager interface.
- *
+ * 
  */
 public interface PhotoManager extends DemoEntityManager<Photo> {
-  /**
-   * Lookups a specific photo.
-   *
-   * @param userId the owner's user id.
-   * @param id the photo id.
-   *
-   * @return the photo entity; return null if photo is not found.
-   */
-  Photo getPhoto(String userId, long id);
+	/**
+	 * Lookups a specific photo.
+	 * 
+	 * @param userId
+	 *            the owner's user id.
+	 * @param id
+	 *            the photo id.
+	 * 
+	 * @return the photo entity; return null if photo is not found.
+	 */
+	Photo getPhoto(String userId, long id);
 
-  /**
-   * Queries an {@code Iterable} collection of photos owned by the user.
-   *
-   * @param userId the user id.
-   * @return an {@code Iterable} collection of photos.
-   */
-  Iterable<Photo> getOwnedPhotos(String userId);
+	/**
+	 * Queries an {@code Iterable} collection of photos owned by the user.
+	 * 
+	 * @param userId
+	 *            the user id.
+	 * @return an {@code Iterable} collection of photos.
+	 */
+	Iterable<Photo> getOwnedPhotos(String userId);
 
-  /**
-   * Queries all photos shared to a user with specific user id. The result set
-   * does not include photos owned by the user.
-   *
-   * @param userId the user id.
-   *
-   * @return an {@code Iterable} collection of photos shared to the user.
-   */
-  Iterable<Photo> getSharedPhotos(String userId);
+	/**
+	 * Queries all photos shared to a user with specific user id. The result set
+	 * does not include photos owned by the user.
+	 * 
+	 * @param userId
+	 *            the user id.
+	 * 
+	 * @return an {@code Iterable} collection of photos shared to the user.
+	 */
+	Iterable<Photo> getSharedPhotos(String userId);
 
-  /**
-   * Gets all deactived photos.
-   *
-   * @return an {@code Iterable} collection of deactived photos.
-   */
-  Iterable<Photo> getDeactivedPhotos();
+	/**
+	 * Gets all deactived photos.
+	 * 
+	 * @return an {@code Iterable} collection of deactived photos.
+	 */
+	Iterable<Photo> getDeactivedPhotos();
 
-  /**
-   * Gets all active photos.
-   *
-   * @return an {@code Iterable} collection of active photos.
-   */
-  Iterable<Photo> getActivePhotos();
+	/**
+	 * Gets all active photos.
+	 * 
+	 * @return an {@code Iterable} collection of active photos.
+	 */
+	Iterable<Photo> getActivePhotos();
 
-  /**
-   * Creates a new photo object based on user id. The object is not yet
-   * serialized to datastore yet.
-   *
-   * @param userId the user id.
-   *
-   * @return a photo object.
-   */
-  Photo newPhoto(String userId);
+	/**
+	 * Creates a new photo object based on user id. The object is not yet
+	 * serialized to datastore yet.
+	 * 
+	 * @param userId
+	 *            the user id.
+	 * 
+	 * @return a photo object.
+	 */
+	Photo newPhoto(String userId);
 
-  /**
-   * Marks a photo inactive so that the photo is ready for delete.
-   *
-   * @return the deactived photo object; null if operation failed.
-   */
-  Photo deactivePhoto(String userId, long id);
+	/**
+	 * Marks a photo inactive so that the photo is ready for delete.
+	 * 
+	 * @return the deactived photo object; null if operation failed.
+	 */
+	Photo deactivePhoto(String userId, long id);
 }
