@@ -13,16 +13,11 @@
  */
 package com.google.cloud.demo.model.nosql;
 
-import java.util.Arrays;
-import java.util.List;
-
 import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.FetchOptions;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.Query;
-import com.google.appengine.api.datastore.Query.CompositeFilterOperator;
-import com.google.appengine.api.datastore.Query.Filter;
 import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.google.cloud.demo.model.Restaurant;
 import com.google.cloud.demo.model.RestaurantManager;
@@ -43,15 +38,15 @@ public class RestaurantManagerNoSql extends DemoEntityManagerNoSql<Restaurant>
 		Query query = new Query(getKind());
 		Query.Filter urlFilter = new Query.FilterPredicate(
 				RestaurantNoSql.FIELD_NAME_URL, FilterOperator.EQUAL, url);
+		query.setFilter(urlFilter);
 
-		List<Filter> filters = Arrays.asList(urlFilter);
-		Filter filter = new Query.CompositeFilter(CompositeFilterOperator.AND,
-				filters);
-		query.setFilter(filter);
 		FetchOptions options = FetchOptions.Builder.withDefaults();
-
 		Iterable<Restaurant> result = queryEntities(query, options);
-		return result.iterator().next();
+		if (result.iterator().hasNext()) {
+			return result.iterator().next();
+		} else {
+			return null;
+		}
 	}
 
 	@Override

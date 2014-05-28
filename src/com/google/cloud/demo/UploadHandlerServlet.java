@@ -16,6 +16,7 @@ package com.google.cloud.demo;
 import com.google.appengine.api.blobstore.BlobKey;
 import com.google.appengine.api.blobstore.BlobstoreService;
 import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
+import com.google.appengine.api.users.UserServiceFactory;
 import com.google.cloud.demo.model.DemoUser;
 import com.google.cloud.demo.model.Photo;
 import com.google.cloud.demo.model.PhotoManager;
