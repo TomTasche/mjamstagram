@@ -189,6 +189,7 @@ function toggleCommentPost(id, expanded) {
       <div class="post group">
         <div class="usr">
           <div class="comment">
+          	<h3><%= ServletUtils.getProtectedUserNickname(comment.getCommentOwnerName()) %></h3>
             <p><c:out value="<%= comment.getContent() %>" escapeXml="true"/>
             <p>
             <p class="timestamp"><%= ServletUtils.formatTimestamp(comment.getTimestamp()) %></p>
