@@ -28,6 +28,10 @@ public abstract class DemoEntityNoSql {
 		this.entity = entity;
 	}
 
+	protected DemoEntityNoSql(String kind) {
+		this.entity = new Entity(kind);
+	}
+
 	protected DemoEntityNoSql(Key parentKey, String kind) {
 		this.entity = new Entity(kind, parentKey);
 	}

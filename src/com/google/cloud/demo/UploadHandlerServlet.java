@@ -13,16 +13,6 @@
  */
 package com.google.cloud.demo;
 
-import com.google.appengine.api.blobstore.BlobKey;
-import com.google.appengine.api.blobstore.BlobstoreService;
-import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
-import com.google.appengine.api.users.UserServiceFactory;
-import com.google.cloud.demo.model.DemoUser;
-import com.google.cloud.demo.model.Photo;
-import com.google.cloud.demo.model.PhotoManager;
-import com.google.cloud.demo.model.Restaurant;
-import com.google.cloud.demo.model.RestaurantManager;
-
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -30,6 +20,15 @@ import java.util.Map;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.google.appengine.api.blobstore.BlobKey;
+import com.google.appengine.api.blobstore.BlobstoreService;
+import com.google.appengine.api.blobstore.BlobstoreServiceFactory;
+import com.google.cloud.demo.model.DemoUser;
+import com.google.cloud.demo.model.Photo;
+import com.google.cloud.demo.model.PhotoManager;
+import com.google.cloud.demo.model.Restaurant;
+import com.google.cloud.demo.model.RestaurantManager;
 
 /**
  * Servlet to handle photo upload to Google Cloud Storage.
@@ -65,7 +64,7 @@ public class UploadHandlerServlet extends HttpServlet {
 					.getRestaurantManager();
 			Restaurant restaurant = restaurantManager.getRestaurant(url);
 			if (restaurant == null) {
-				restaurant = restaurantManager.newRestaurant(url);
+				restaurant = restaurantManager.newRestaurant();
 				restaurant.setUrl(url);
 
 				restaurant = restaurantManager.upsertEntity(restaurant);

@@ -15,7 +15,6 @@
 package com.google.cloud.demo.model.nosql;
 
 import com.google.appengine.api.datastore.Entity;
-import com.google.appengine.api.datastore.Key;
 import com.google.cloud.demo.model.Restaurant;
 
 public class RestaurantNoSql extends DemoEntityNoSql implements Restaurant {
@@ -26,8 +25,8 @@ public class RestaurantNoSql extends DemoEntityNoSql implements Restaurant {
 		super(entity);
 	}
 
-	public RestaurantNoSql(Key parentKey, String kind) {
-		super(parentKey, kind);
+	public RestaurantNoSql(String kind) {
+		super(kind);
 	}
 
 	public static final String getKind() {

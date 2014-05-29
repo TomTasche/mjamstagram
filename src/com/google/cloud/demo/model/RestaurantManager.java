@@ -19,5 +19,5 @@ public interface RestaurantManager extends DemoEntityManager<Restaurant> {
 
 	Restaurant getRestaurant(Long id);
 
-	Restaurant newRestaurant(String url);
+	Restaurant newRestaurant();
 }

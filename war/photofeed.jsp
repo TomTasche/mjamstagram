@@ -14,6 +14,7 @@
   DemoUser currentUser = appContext.getCurrentUser();
   PhotoServiceManager serviceManager = appContext.getPhotoServiceManager();
   PhotoManager photoManager = appContext.getPhotoManager();
+  RestaurantManager restaurantManager = appContext.getRestaurantManager();
   CommentManager commentManager = appContext.getCommentManager();
 %>
 <!DOCTYPE html>
@@ -154,6 +155,8 @@ function toggleCommentPost(id, expanded) {
 
       int count = 0;
       for (Photo photo : photos) {
+    	  Restaurant restaurant = restaurantManager.getRestaurant(photo.getRestaurantId());
+    	  
         String firstClass = "";
         String lastClass = "";
         if (count == 0) {
@@ -167,14 +170,27 @@ function toggleCommentPost(id, expanded) {
       <div class="post group">
         <div class="image-wrap">
           <img class="photo-image"
-            src="<%= serviceManager.getImageDownloadUrl(photo)%>"
+            src="<%= serviceManager.getImageDownloadUrl(photo) %>"
             alt="Photo Image" />
         </div>
         <div class="owner group">
           <div class="desc">
             <h3><%= ServletUtils.getProtectedUserNickname(photo.getOwnerNickname()) %></h3>
-            <p><c:out value="<%= photo.getFood() %>" escapeXml="true"/>
             <p>
+            	<c:out value="<%= photo.getFood() %>" escapeXml="true"/>
+            	//
+            	<%
+                if (restaurant.getName() != null) {
+            	%>
+                	<a href="<%= restaurant.getUrl() %>" ><%= restaurant.getName() %></a>
+                <%
+                } else {
+                %>
+                	<a href="<%= restaurant.getUrl() %>"><%= restaurant.getUrl() %></a>
+                <%
+                }
+            	%>
+            </p>
             <p class="timestamp"><%= ServletUtils.formatTimestamp(photo.getUploadTime()) %></p>
           </div>
           <!-- /.desc -->

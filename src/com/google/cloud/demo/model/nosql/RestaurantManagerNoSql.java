@@ -55,9 +55,8 @@ public class RestaurantManagerNoSql extends DemoEntityManagerNoSql<Restaurant>
 	}
 
 	@Override
-	public Restaurant newRestaurant(String url) {
-		return new RestaurantNoSql(KeyFactory.createKey(getKind(), url),
-				getKind());
+	public Restaurant newRestaurant() {
+		return new RestaurantNoSql(getKind());
 	}
 
 	@Override
