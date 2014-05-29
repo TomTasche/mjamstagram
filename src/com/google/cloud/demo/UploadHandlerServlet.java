@@ -66,6 +66,7 @@ public class UploadHandlerServlet extends HttpServlet {
 			if (restaurant == null) {
 				restaurant = restaurantManager.newRestaurant();
 				restaurant.setUrl(url);
+				restaurant.setName(url);
 
 				restaurant = restaurantManager.upsertEntity(restaurant);
 			}
