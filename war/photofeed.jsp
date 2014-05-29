@@ -179,7 +179,7 @@ function toggleCommentPost(id, expanded) {
             <p>
             	<c:out value="<%= photo.getFood() %>" escapeXml="true"/>
             	//
-            	<a href="<%= restaurant.getUrl() %>"><%= restaurant.getUrl() %></a>
+            	<a href="<%= restaurant.getUrl() %>"><%= restaurant.getName() %></a>
             </p>
             <p class="timestamp"><%= ServletUtils.formatTimestamp(photo.getUploadTime()) %></p>
           </div>
